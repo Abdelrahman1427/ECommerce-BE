@@ -29,6 +29,7 @@ namespace Application
             // New services
             services.AddScoped<ICartService, CartService>();
             services.AddScoped<IDiscountService, DiscountService>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             return services;
         }

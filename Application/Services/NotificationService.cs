@@ -1,4 +1,8 @@
 
+using Application.Common.NotificationDTOS;
+using Application.Common.Pagination;
+using Application.Helper;
+using Application.Interfaces;
 using Domain.Common;
 using Domain.Entities;
 using Domain.Enum;
@@ -7,7 +11,7 @@ using Infrastructure.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Services
+namespace Application.Services
 {
     public class NotificationService : INotificationService
     {

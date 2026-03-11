@@ -10,8 +10,8 @@ namespace Application.Common.DiscountDTOS
         public int? MaxUsage { get; set; }
         public int UsedCount { get; set; }
         public decimal? MinimumOrderTotal { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; }
         public DateTimeOffset Created { get; set; }
     }
@@ -24,8 +24,8 @@ namespace Application.Common.DiscountDTOS
         public decimal Value { get; set; }
         public int? MaxUsage { get; set; }
         public decimal? MinimumOrderTotal { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; } = true;
     }
 
@@ -36,8 +36,8 @@ namespace Application.Common.DiscountDTOS
         public decimal? Value { get; set; }
         public int? MaxUsage { get; set; }
         public decimal? MinimumOrderTotal { get; set; }
-        public DateTimeOffset? StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool? IsActive { get; set; }
     }
 

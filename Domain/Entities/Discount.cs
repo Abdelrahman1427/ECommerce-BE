@@ -12,8 +12,8 @@ namespace Domain.Entities
         public int? MaxUsage { get; set; }
         public int UsedCount { get; set; }
         public decimal? MinimumOrderTotal { get; set; }
-        public DateTimeOffset StartDate { get; set; }
-        public DateTimeOffset? EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public bool IsActive { get; set; } = true;
     }
 }

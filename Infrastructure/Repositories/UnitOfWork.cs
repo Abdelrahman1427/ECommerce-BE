@@ -35,7 +35,7 @@ public class UnitOfWork : IUnitOfWork, IDisposable
     {
         try
         {
-            var branchId = _currentTenantService.BranchId;
+            //var branchId = _currentTenantService.BranchId;
             var userName = _currentTenantService.UserName;
             //var now = DateTimeOffset.UtcNow;
 
@@ -52,10 +52,10 @@ public class UnitOfWork : IUnitOfWork, IDisposable
             //}
             foreach (var entry in _context.ChangeTracker.Entries())
             {
-                if (entry.State == EntityState.Added && entry.Entity is IBranchEntity branchEntity)
-                {
-                    branchEntity.BranchId ??= branchId;
-                }
+                //if (entry.State == EntityState.Added && entry.Entity is IBranchEntity branchEntity)
+                //{
+                //    branchEntity.BranchId ??= branchId;
+                //}
 
                 if (entry.Entity is BaseAuditableEntity auditable)
                 {

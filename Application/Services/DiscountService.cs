@@ -54,8 +54,10 @@ namespace Application.Services
                 Value = dto.Value,
                 MaxUsage = dto.MaxUsage,
                 MinimumOrderTotal = dto.MinimumOrderTotal,
-                StartDate = dto.StartDate,
-                EndDate = dto.EndDate,
+                StartDate = DateTime.SpecifyKind(dto.StartDate, DateTimeKind.Utc),
+                EndDate = dto.EndDate.HasValue
+                    ? DateTime.SpecifyKind(dto.EndDate.Value, DateTimeKind.Utc)
+                    : null,
                 IsActive = dto.IsActive
             };
 
@@ -105,7 +107,7 @@ namespace Application.Services
             if (discount == null || !discount.IsActive)
                 return new ApplyDiscountResultDto { Applied = false, Message = "Invalid or inactive discount code." };
 
-            if (discount.EndDate.HasValue && discount.EndDate < DateTimeOffset.UtcNow)
+            if (discount.EndDate.HasValue && discount.EndDate < DateTime.UtcNow)
                 return new ApplyDiscountResultDto { Applied = false, Message = "Discount code has expired." };
 
             if (discount.MaxUsage.HasValue && discount.UsedCount >= discount.MaxUsage)

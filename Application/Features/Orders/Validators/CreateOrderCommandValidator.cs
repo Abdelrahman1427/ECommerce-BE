@@ -7,7 +7,7 @@ namespace Application.Features.Orders.Validators
     {
         public CreateOrderCommandValidator()
         {
-            RuleFor(x => x.Order.UserId).NotEmpty().WithMessage("UserId is required.");
+            RuleFor(x => x.UserId).NotEmpty().WithMessage("UserId is required.");
             RuleFor(x => x.Order.Items).NotEmpty().WithMessage("Order must contain at least one item.");
             RuleForEach(x => x.Order.Items).SetValidator(new CreateOrderItemValidator());
         }

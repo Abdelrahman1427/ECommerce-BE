@@ -16,7 +16,7 @@ namespace Application.Helper
             if (!Directory.Exists(rootPath))
                 Directory.CreateDirectory(rootPath);
 
-            _folder = config.GetValue<string>("UploadSettings:UploadPath") ?? "wwwroot/floors";
+            //_folder = config.GetValue<string>("UploadSettings:UploadPath") ?? "wwwroot/floors";
             _uploadPath = Path.Combine(env.WebRootPath, _folder);
         }
         public static async Task<(string FilePath, string ErrorMessage)> UploadFileAsync(IFormFile file, string[] allowedExtensions, long maxFileSizeInBytes = 10 * 1024 * 1024) // Default: 10MB

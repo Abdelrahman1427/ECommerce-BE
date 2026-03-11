@@ -1,9 +1,7 @@
-using Application.Interfaces;
 using Domain.Entities;
 using Domain.IRepository;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +16,7 @@ namespace Infrastructure
             services.AddDbContext<ECommerceContext>((serviceProvider, opt) =>
             {
                 var connectionString = config.GetConnectionString("DefaultConnection");
-                opt.UseSqlServer(connectionString, sqlOptions =>
+                opt.UseNpgsql(connectionString, sqlOptions =>
                 {
                     sqlOptions.CommandTimeout(30);
                 });
@@ -34,7 +32,6 @@ namespace Infrastructure
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // NotificationService (Application interface, Infrastructure implementation)
-            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddScoped<ICurrentTenantService, CurrentTenantService>();
 

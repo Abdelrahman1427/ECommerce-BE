@@ -63,7 +63,7 @@ namespace Application.Features.Orders.Handlers
                     .FirstOrDefaultAsync(d => d.Code == dto.DiscountCode.ToUpper(), cancellationToken);
 
                 if (discount != null && discount.IsActive
-                    && (discount.EndDate == null || discount.EndDate > DateTimeOffset.UtcNow)
+                    && (discount.EndDate == null || discount.EndDate > DateTime.UtcNow)
                     && (discount.MaxUsage == null || discount.UsedCount < discount.MaxUsage))
                 {
                     // calculate after we know total
