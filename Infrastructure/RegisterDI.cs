@@ -16,7 +16,7 @@ namespace Infrastructure
             services.AddDbContext<ECommerceContext>((serviceProvider, opt) =>
             {
                 var connectionString = config.GetConnectionString("DefaultConnection");
-                opt.UseNpgsql(connectionString, sqlOptions =>
+                opt.UseSqlServer(connectionString, sqlOptions =>
                 {
                     sqlOptions.CommandTimeout(30);
                 });
