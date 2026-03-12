@@ -19,6 +19,7 @@ namespace Infrastructure
                 opt.UseSqlServer(connectionString, sqlOptions =>
                 {
                     sqlOptions.CommandTimeout(30);
+
                 });
             });
 
