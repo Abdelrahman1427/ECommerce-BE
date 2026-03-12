@@ -11,7 +11,9 @@ namespace Application.Common.CategoryDTOS
     public class AddCategoryDTO
     {
         public string Name { get; set; }
+        public string Description { get; set; }
 
+        public bool IsActive { get; set; } = true;
         //public List<ProductDto> Products { get; set; } = new();
     }
 }

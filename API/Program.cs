@@ -31,6 +31,7 @@ builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationService();
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<Microsoft.AspNetCore.SignalR.IUserIdProvider, Infrastructure.SignalR.UserIdProvider>();
 builder.Services.AddSwaggerDocumentation();
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 builder.Services.AddCors(options =>

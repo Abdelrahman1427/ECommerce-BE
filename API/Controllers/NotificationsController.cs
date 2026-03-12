@@ -21,19 +21,26 @@ namespace API.Controllers
 
         private string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
 
-        //[HttpGet]
-        //public async Task<IActionResult> Get([FromQuery] PagingDTO paging, [FromQuery] bool? onlyUnread = null)
-        //{
-        //    var result = await _notificationService.GetAllAsync(UserId, paging, onlyUnread);
-        //    return Ok(new { success = true, data = result });
-        //}
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] PagingDTO paging, [FromQuery] bool? onlyUnread = null)
+        {
+            var result = await _notificationService.GetAllAsync(UserId, paging, onlyUnread);
+            return Ok(new { success = true, data = result });
+        }
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetById(int id)
-        //{
-        //    var result = await _notificationService.GetByIdAsync(id);
-        //    return result == null ? NotFound() : Ok(new { success = true, data = result });
-        //}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _notificationService.GetByIdAsync(id);
+            return result == null ? NotFound() : Ok(new { success = true, data = result });
+        }
+
+        [HttpGet("unread-count")]
+        public async Task<IActionResult> UnreadCount()
+        {
+            var count = await _notificationService.GetUnreadCountAsync(UserId);
+            return Ok(new { success = true, data = new { count } });
+        }
 
         [HttpPost("{id}/read")]
         public async Task<IActionResult> MarkAsRead(int id)
@@ -42,26 +49,19 @@ namespace API.Controllers
             return Ok(new { success = true, message = "Notification marked as read" });
         }
 
-        //[HttpPost("{id}/unread")]
-        //public async Task<IActionResult> MarkAsUnread(int id)
-        //{
-        //    await _notificationService.MarkAsUnreadAsync(id);
-        //    return Ok(new { success = true, message = "Notification marked as unread" });
-        //}
+        [HttpPost("{id}/unread")]
+        public async Task<IActionResult> MarkAsUnread(int id)
+        {
+            await _notificationService.MarkAsUnreadAsync(id);
+            return Ok(new { success = true, message = "Notification marked as unread" });
+        }
 
-        //[HttpPost("mark-all-read")]
-        //public async Task<IActionResult> MarkAllAsRead()
-        //{
-        //    await _notificationService.MarkAllAsReadAsync(UserId);
-        //    return Ok(new { success = true, message = "All notifications marked as read" });
-        //}
-
-        //[HttpGet("unread-count")]
-        //public async Task<IActionResult> UnreadCount()
-        //{
-        //    var count = await _notificationService.GetUnreadCountAsync(UserId);
-        //    return Ok(new { success = true, data = new { count } });
-        //}
+        [HttpPost("mark-all-read")]
+        public async Task<IActionResult> MarkAllAsRead()
+        {
+            await _notificationService.MarkAllAsReadAsync(UserId);
+            return Ok(new { success = true, message = "All notifications marked as read" });
+        }
 
         [HttpPost("send")]
         [Authorize(Roles = "Admin")]

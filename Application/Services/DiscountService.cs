@@ -76,8 +76,10 @@ namespace Application.Services
             if (dto.Value.HasValue) entity.Value = dto.Value.Value;
             if (dto.MaxUsage.HasValue) entity.MaxUsage = dto.MaxUsage;
             if (dto.MinimumOrderTotal.HasValue) entity.MinimumOrderTotal = dto.MinimumOrderTotal;
-            if (dto.StartDate.HasValue) entity.StartDate = dto.StartDate.Value;
-            if (dto.EndDate.HasValue) entity.EndDate = dto.EndDate;
+            if (dto.StartDate.HasValue) entity.StartDate = DateTime.SpecifyKind(dto.StartDate.Value, DateTimeKind.Utc) ;
+            if (dto.EndDate.HasValue) entity.EndDate = dto.EndDate.HasValue
+                    ? DateTime.SpecifyKind(dto.EndDate.Value, DateTimeKind.Utc)
+                    : null;
             if (dto.IsActive.HasValue) entity.IsActive = dto.IsActive.Value;
 
             await _unitOfWork.Repository<Discount>().UpdateAsync(entity, CancellationToken.None);

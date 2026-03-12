@@ -16,8 +16,7 @@ namespace API.Controllers
         protected virtual Expression<Func<TEntity, object>>[] includes => Array.Empty<Expression<Func<TEntity, object>>>();
 
         public GenericController(
-            IGenericService<TEntity, TGetDTO, TFilter, TAddDTO, TUpdateDTO> service
-           )
+            IGenericService<TEntity, TGetDTO, TFilter, TAddDTO, TUpdateDTO> service)
         {
             _service = service;
         }
@@ -25,14 +24,16 @@ namespace API.Controllers
         [HttpGet]
         public virtual async Task<ActionResult<IEnumerable<TGetDTO>>> GetAll(CancellationToken ct)
         {
-            var result = await _service.GetAllAsync( ct);
-            return Ok(result);
+            var result = await _service.GetAllAsync(ct);
+            return Ok(new { success = true, data = result });
         }
+
         [HttpPost("FilteredPaged")]
-        public virtual async Task<ActionResult<PagedResponse<TGetDTO>>> GetFilteredPaged([FromBody] PagingDTO<TFilter>? paging, CancellationToken ct)
+        public virtual async Task<ActionResult<PagedResponse<TGetDTO>>> GetFilteredPaged(
+            [FromBody] PagingDTO<TFilter>? paging, CancellationToken ct)
         {
             var result = await _service.GetFilteredPagedAsync(paging, ct);
-            return Ok(result);
+            return Ok(new { success = true, data = result });
         }
 
         [HttpGet("{id}")]
@@ -40,11 +41,9 @@ namespace API.Controllers
         {
             var entity = await _service.GetByIdAsync(id, ct);
             if (entity == null)
-            {
-                return NotFound(new { Message = $"Entity with ID {id} not found." });
-            }
+                return NotFound(new { success = false, message = $"Entity with ID {id} not found." });
 
-            return Ok(entity);
+            return Ok(new { success = true, data = entity });
         }
 
         [HttpPost]
@@ -53,25 +52,22 @@ namespace API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            await _service.CreateAsync(dto, ct);
-            return Created();
+            var result = await _service.CreateAsync(dto, ct);
+            return Ok(new { success = true, message = "Created successfully", data = result });
         }
 
-
         [HttpPut("{id}")]
-        public virtual async Task<ActionResult> Update(int id, [FromBody] TUpdateDTO dto, CancellationToken ct) 
+        public virtual async Task<ActionResult> Update(int id, [FromBody] TUpdateDTO dto, CancellationToken ct)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var existing = await _service.GetByIdAsync(id, ct);
             if (existing == null)
-            {
-                return NotFound(new { Message = $"Entity with ID {id} not found." });
-            }
+                return NotFound(new { success = false, message = $"Entity with ID {id} not found." });
 
-            await _service.UpdateAsync(id, dto, ct);
-            return NoContent();
+            var result = await _service.UpdateAsync(id, dto, ct);
+            return Ok(new { success = true, message = "Updated successfully", data = result });
         }
 
         [HttpDelete("{id}")]
@@ -79,14 +75,10 @@ namespace API.Controllers
         {
             var existing = await _service.GetByIdAsync(id, ct);
             if (existing == null)
-            {
-                return NotFound(new { Message = $"Entity with ID {id} not found." });
-            }
+                return NotFound(new { success = false, message = $"Entity with ID {id} not found." });
 
             await _service.DeleteAsync(id, ct);
-            return NoContent();
+            return Ok(new { success = true, message = "Deleted successfully" });
         }
-
-
     }
 }
